@@ -6,7 +6,6 @@ use App\Models\Paciente;
 use App\Http\Requests\PacienteRequest;
 use App\Models\User;
 
-
 /**
  * Class PacienteController
  * @package App\Http\Controllers
@@ -50,12 +49,12 @@ class PacienteController extends Controller
     }
 
     public function create()
-{
-    $paciente = new Paciente();
-    $usuarios = User::all()->pluck('name', 'id_user'); 
+    {
+        $paciente = new Paciente();
+        $usuarios = User::all()->pluck('name', 'id_user');
 
-    return view('paciente.create', compact('paciente', 'usuarios'));
-}
+        return view('paciente.create', compact('paciente', 'usuarios'));
+    }
 
     public function store(PacienteRequest $request)
     {
@@ -63,4 +62,11 @@ class PacienteController extends Controller
         return redirect()->route('pacientes.index')->with('success', 'Paciente created successfully.');
     }
 
+    public function showConsultas($dni_paciente)
+    {
+        $paciente = Paciente::where('dni_paciente', $dni_paciente)->firstOrFail();
+        $consultas = $paciente->consultas;
+
+        return view('paciente.consultas', compact('paciente', 'consultas'));
+    }
 }

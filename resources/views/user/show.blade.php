@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Mostrar Medico</h1>
+    <h1>Mostrar Usuario</h1>
 @stop
 
 
@@ -14,34 +14,26 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Mostrar') }} Medico</span>
+                            <span class="card-title">{{ __('Mostrar') }} User</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('medicos.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('users.index') }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body bg-white">
                         
                         <div class="form-group mb-2 mb20">
-                            <strong>Dni Medico:</strong>
-                            {{ $medico->dni_medico }}
+                            <strong>Id User:</strong>
+                            {{ $user->id_user }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>User Id:</strong>
-                            {{ $medico->user_id }}
+                            <strong>Name:</strong>
+                            {{ $user->name }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Nombre:</strong>
-                            {{ $medico->nombre }}
-                        </div>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Especialidad:</strong>
-                            {{ $medico->especialidad }}
-                        </div>
-                        <div class="form-group mb-2 mb20">
-                            <strong>Horario:</strong>
-                            {{ $medico->horario }}
+                            <strong>Email:</strong>
+                            {{ $user->email }}
                         </div>
 
                     </div>

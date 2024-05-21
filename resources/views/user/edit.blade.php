@@ -3,9 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Editar Consulta</h1>
+    <h1>Editar Usuario</h1>
 @stop
-
 
 @section('content')
     <section class="content container-fluid">
@@ -14,14 +13,14 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Consulta</span>
+                        <span class="card-title">{{ __('Update') }} User</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('consultas.update', $consulta->id_consulta) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('users.update', $user->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('consulta.form')
+                            @include('user.form')
 
                         </form>
                     </div>

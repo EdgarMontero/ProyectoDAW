@@ -3,8 +3,9 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Medicos</h1>
+    <h1>Lista de Usuarios</h1>
 @stop
+
 
 @section('content')
     <div class="container-fluid">
@@ -15,11 +16,11 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Medico') }}
+                                {{ __('User') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('medicos.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -37,33 +38,28 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-										<th>Dni Medico</th>
-										<th>User Id</th>
-										<th>Nombre</th>
-										<th>Especialidad</th>
-										<th>Horario</th>
+                                        
+										<th>Name</th>
+										<th>Email</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($medicos as $medico)
+                                    @foreach ($users as $user)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $medico->dni_medico }}</td>
-											<td>{{ $medico->user_id }}</td>
-											<td>{{ $medico->nombre }}</td>
-											<td>{{ $medico->especialidad }}</td>
-											<td>{{ $medico->horario }}</td>
+											<td>{{ $user->name }}</td>
+											<td>{{ $user->email }}</td>
 
                                             <td>
-                                                <form action="{{ route('medicos.destroy',$medico->dni_medico) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('medicos.show',$medico->dni_medico) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('medicos.edit',$medico->dni_medico) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                <form action="{{ route('users.destroy',$user->id_user) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('users.show',$user->id_user) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('users.edit',$user->id_user) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Borrar') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -73,8 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                {!! $medicos->links() !!}
+                {!! $users->links() !!}
             </div>
         </div>
     </div>
@@ -96,6 +91,8 @@
     }
 </style>
 @stop
+
+
 
 @section('js')
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

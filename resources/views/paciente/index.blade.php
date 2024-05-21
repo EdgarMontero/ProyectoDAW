@@ -37,36 +37,33 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-										<th>Dni Paciente</th>
-										<th>User</th>
-										<th>Nombre</th>
-										<th>Fecha Nacimiento</th>
-										<th>Direccion</th>
-										<th>Telefono</th>
-
-                                        <th></th>
+                                        <th>Dni Paciente</th>
+                                        <th>User</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha Nacimiento</th>
+                                        <th>Direccion</th>
+                                        <th>Telefono</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($pacientes as $paciente)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $paciente->dni_paciente }}</td>
+                                            <td>{{ $paciente->dni_paciente }}</td>
                                             <td>{{ $paciente->user->name }}</td>
-											<td>{{ $paciente->nombre }}</td>
-											<td>{{ $paciente->fecha_nacimiento }}</td>
-											<td>{{ $paciente->direccion }}</td>
-											<td>{{ $paciente->telefono }}</td>
-
+                                            <td>{{ $paciente->nombre }}</td>
+                                            <td>{{ $paciente->fecha_nacimiento }}</td>
+                                            <td>{{ $paciente->direccion }}</td>
+                                            <td>{{ $paciente->telefono }}</td>
                                             <td>
-                                                <form action="{{ route('pacientes.destroy',$paciente->dni_paciente) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('pacientes.show',$paciente->dni_paciente) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('pacientes.edit',$paciente->dni_paciente) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('pacientes.destroy', $paciente->dni_paciente) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary" href="{{ route('pacientes.show', $paciente->dni_paciente) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('pacientes.edit', $paciente->dni_paciente) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                    <a class="btn btn-sm btn-info" href="{{ route('pacientes.showConsultas', $paciente->dni_paciente) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar Consultas') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -76,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
                 {!! $pacientes->links() !!}
             </div>
         </div>
@@ -84,6 +82,19 @@
 
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .pagination a {
+        font-size: 16px; /* Ajusta el tamaño de la fuente */
+    }
+    .pagination li {
+        padding: 0 10px; /* Ajusta el padding */
+    }
+    .w-5, .h-5 { /* Asegúrate de que estas clases estén definidas */
+        width: 20px; /* Ancho del SVG */
+        height: 20px; /* Alto del SVG */
+    }
+</style>
 @stop
 
 @section('js')

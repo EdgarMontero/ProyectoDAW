@@ -24,14 +24,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Paciente extends Model
 {
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
     protected $primaryKey = 'dni_paciente';
 
-    protected $perPage = 20;
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    protected $perPage = 100;
 
     /**
      * Attributes that should be mass-assignable.
@@ -53,7 +52,7 @@ class Paciente extends Model
      */
     public function consultas()
     {
-        return $this->hasMany(\App\Models\Consulta::class, 'dni_paciente', 'id_paciente');
+        return $this->hasMany(\App\Models\Consulta::class, 'id_paciente', 'dni_paciente');
     }
     
     /**
@@ -61,7 +60,7 @@ class Paciente extends Model
      */
     public function relacionMedicoPacientes()
     {
-        return $this->hasMany(\App\Models\RelacionMedicoPaciente::class, 'dni_paciente', 'id_paciente');
+        return $this->hasMany(\App\Models\RelacionMedicoPaciente::class, 'dni_paciente', 'dni_paciente');
     }
-
 }
+?>

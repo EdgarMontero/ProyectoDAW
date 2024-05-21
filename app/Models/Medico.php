@@ -23,7 +23,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Medico extends Model
 {
-    protected $perPage = 20;
+    protected $primaryKey = 'dni_medico';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $perPage = 100;
 
     /**
      * Attributes that should be mass-assignable.
@@ -31,7 +35,6 @@ class Medico extends Model
      * @var array
      */
     protected $fillable = ['dni_medico', 'user_id', 'nombre', 'especialidad', 'horario'];
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -46,7 +49,7 @@ class Medico extends Model
      */
     public function consultas()
     {
-        return $this->hasMany(\App\Models\Consulta::class, 'dni_medico', 'id_medico');
+        return $this->hasMany(\App\Models\Consulta::class, 'id_medico', 'dni_medico');
     }
     
     /**
@@ -54,8 +57,7 @@ class Medico extends Model
      */
     public function relacionMedicoPacientes()
     {
-        return $this->hasMany(\App\Models\RelacionMedicoPaciente::class, 'dni_medico', 'id_medico');
+        return $this->hasMany(\App\Models\RelacionMedicoPaciente::class, 'dni_medico', 'dni_medico');
     }
-    
-
 }
+?>

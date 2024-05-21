@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Consulta;
 use App\Http\Requests\ConsultaRequest;
+use Illuminate\Database\QueryException;
+
 
 /**
  * Class ConsultaController
@@ -36,18 +38,37 @@ class ConsultaController extends Controller
      */
     public function store(ConsultaRequest $request)
     {
-        Consulta::create($request->validated());
+        try {
+            Consulta::create($request->validated());
 
-        return redirect()->route('consultas.index')
-            ->with('success', 'Consulta created successfully.');
+            return redirect()->route('consultas.index')
+                ->with('success', 'Consulta created successfully.');
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1452) {
+                // Error de restricción de clave externa
+                if (strpos($e->getMessage(), 'consultas_id_medico_foreign') !== false) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['id_medico' => 'El DNI del médico no es válido.']);
+                } elseif (strpos($e->getMessage(), 'consultas_id_paciente_foreign') !== false) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['id_paciente' => 'El DNI del paciente no es válido.']);
+                }
+            }
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Ocurrió un error al guardar la consulta.']);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id_consulta)
     {
-        $consulta = Consulta::find($id);
+        $consulta = Consulta::find($id_consulta);
 
         return view('consulta.show', compact('consulta'));
     }
@@ -55,9 +76,9 @@ class ConsultaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id_consulta)
     {
-        $consulta = Consulta::find($id);
+        $consulta = Consulta::find($id_consulta);
 
         return view('consulta.edit', compact('consulta'));
     }
@@ -67,10 +88,29 @@ class ConsultaController extends Controller
      */
     public function update(ConsultaRequest $request, Consulta $consulta)
     {
-        $consulta->update($request->validated());
+        try {
+            $consulta->update($request->validated());
 
-        return redirect()->route('consultas.index')
-            ->with('success', 'Consulta updated successfully');
+            return redirect()->route('consultas.index')
+                ->with('success', 'Consulta updated successfully');
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1452) {
+                // Error de restricción de clave externa
+                if (strpos($e->getMessage(), 'consultas_id_medico_foreign') !== false) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['id_medico' => 'El DNI del médico no es válido.']);
+                } elseif (strpos($e->getMessage(), 'consultas_id_paciente_foreign') !== false) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['id_paciente' => 'El DNI del paciente no es válido.']);
+                }
+            }
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Ocurrió un error al actualizar la consulta.']);
+        }
     }
 
     public function destroy($id)

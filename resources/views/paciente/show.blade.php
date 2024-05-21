@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Enseñar Paciente</h1>
+    <h1>Mostrar Paciente</h1>
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Paciente</span>
+                            <span class="card-title">{{ __('Mostrar') }} Paciente</span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary btn-sm" href="{{ route('pacientes.index') }}"> {{ __('Back') }}</a>

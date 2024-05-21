@@ -23,8 +23,8 @@ class ConsultaRequest extends FormRequest
     {
         return [
 			'id_consulta' => 'required',
-			'id_medico' => 'required',
-			'id_paciente' => 'required',
+			'id_medico' => 'required|string',
+			'id_paciente' => 'required|string',
 			'tipo_consulta' => 'required|string',
 			'descripcion_consulta' => 'required|string',
 			'fecha_consulta' => 'required',

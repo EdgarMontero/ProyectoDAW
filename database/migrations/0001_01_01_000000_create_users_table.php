@@ -22,7 +22,7 @@ return new class extends Migration
 
         // Médicos
         Schema::create('medicos', function (Blueprint $table) {
-            $table->string('dni_medico')->primary();  // Cambiado a string
+            $table->string('dni_medico')->primary();  
             $table->unsignedBigInteger('user_id');
             $table->string('nombre');
             $table->string('especialidad');
@@ -34,7 +34,7 @@ return new class extends Migration
 
         // Pacientes
         Schema::create('pacientes', function (Blueprint $table) {
-            $table->string('dni_paciente')->primary();  // Cambiado a string
+            $table->string('dni_paciente')->primary();  
             $table->unsignedBigInteger('user_id');
             $table->string('nombre');
             $table->date('fecha_nacimiento');
@@ -48,8 +48,8 @@ return new class extends Migration
         // Consultas
         Schema::create('consultas', function (Blueprint $table) {
             $table->id('id_consulta');
-            $table->string('id_medico');  // Ajustado para corresponder al tipo string de dni_medico
-            $table->string('id_paciente');  // Ajustado para corresponder al tipo string de dni_paciente
+            $table->string('id_medico');  
+            $table->string('id_paciente');  
             $table->string('tipo_consulta');
             $table->text('descripcion_consulta');
             $table->date('fecha_consulta');
@@ -61,8 +61,8 @@ return new class extends Migration
 
         // Relación Médico-Paciente
         Schema::create('relacion_medico_paciente', function (Blueprint $table) {
-            $table->string('id_medico');  // Ajustado para corresponder al tipo string de dni_medico
-            $table->string('id_paciente');  // Ajustado para corresponder al tipo string de dni_paciente
+            $table->string('id_medico');  
+            $table->string('id_paciente');  
             $table->timestamps();
 
             $table->primary(['id_medico', 'id_paciente']);
