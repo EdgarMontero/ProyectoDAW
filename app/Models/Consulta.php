@@ -28,12 +28,15 @@ class Consulta extends Model
 
     protected $perPage = 100;
 
+    public $timestamps = true;
+
     static $rules = [
-        'id_medico' => 'required|exists:medicos,dni_medico',
-        'id_paciente' => 'required|exists:pacientes,dni_paciente',
-        'tipo_consulta' => 'required|string|max:255',
-        'descripcion_consulta' => 'required|string|max:255',
-        'fecha_consulta' => 'required|date|before_or_equal:today',
+        'id_medico' => 'required|string|exists:medicos,dni_medico',
+            'id_paciente' => 'required|string|exists:pacientes,dni_paciente',
+            'tipo_consulta' => 'required|string|max:100',
+            'descripcion_consulta' => 'required|string',
+            'fecha_consulta' => 'required|date',
+            'hora_consulta' => 'required|date_format:H:i',
     ];
 
     /**

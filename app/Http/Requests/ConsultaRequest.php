@@ -6,28 +6,19 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ConsultaRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    public function rules()
     {
         return [
-			'id_consulta' => 'required',
-			'id_medico' => 'required|string',
-			'id_paciente' => 'required|string',
-			'tipo_consulta' => 'required|string',
-			'descripcion_consulta' => 'required|string',
-			'fecha_consulta' => 'required',
+            'id_medico' => 'required|string|exists:medicos,dni_medico',
+            'id_paciente' => 'required|string|exists:pacientes,dni_paciente',
+            'tipo_consulta' => 'required|string|max:100',
+            'descripcion_consulta' => 'required|string',
+            'fecha_consulta' => 'required|date',
         ];
     }
 }

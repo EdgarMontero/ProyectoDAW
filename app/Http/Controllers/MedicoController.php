@@ -11,9 +11,6 @@ use App\Http\Requests\MedicoRequest;
  */
 class MedicoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $medicos = Medico::paginate();
@@ -37,7 +34,10 @@ class MedicoController extends Controller
     public function update(MedicoRequest $request, $dni_medico)
     {
         $medico = Medico::where('dni_medico', $dni_medico)->firstOrFail();
-        $medico->update($request->validated());
+        $horario = $request->input('horario_inicio') . ' - ' . $request->input('horario_fin');
+        $data = $request->validated();
+        $data['horario'] = $horario;
+        $medico->update($data);
         return redirect()->route('medicos.index')->with('success', 'Medico updated successfully');
     }
 
@@ -47,21 +47,18 @@ class MedicoController extends Controller
         return redirect()->route('medicos.index')->with('success', 'Medico deleted successfully');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $medico = new Medico();
         return view('medico.create', compact('medico'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(MedicoRequest $request)
     {
-        Medico::create($request->validated());
+        $horario = $request->input('horario_inicio') . ' - ' . $request->input('horario_fin');
+        $data = $request->validated();
+        $data['horario'] = $horario;
+        Medico::create($data);
 
         return redirect()->route('medicos.index')
             ->with('success', 'Medico created successfully.');

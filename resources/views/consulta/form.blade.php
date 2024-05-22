@@ -31,11 +31,8 @@
             @enderror
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="fecha_consulta" class="form-label">{{ __('Fecha Consulta') }}</label>
-            <input type="date" name="fecha_consulta" class="form-control @error('fecha_consulta') is-invalid @enderror"
-                value="{{ old('fecha_consulta', $consulta->fecha_consulta ?? date('Y-m-d')) }}" 
-                id="fecha_consulta" placeholder="Fecha Consulta"
-                max="{{ date('Y-m-d') }}">
+            <label for="fecha_consulta" class="form-label">{{ __('Fecha y Hora de la Consulta') }}</label>
+            <input type="datetime-local" name="fecha_consulta" class="form-control @error('fecha_consulta') is-invalid @enderror" value="{{ old('fecha_consulta', $consulta?->fecha_consulta ?? date('Y-m-d\TH:i')) }}" id="fecha_consulta" placeholder="Fecha y Hora de la Consulta">
             @error('fecha_consulta')
                 <div class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></div>
             @enderror

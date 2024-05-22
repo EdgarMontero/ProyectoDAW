@@ -22,9 +22,14 @@
             {!! $errors->first('especialidad', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
-            <label for="horario" class="form-label">{{ __('Horario') }}</label>
-            <input type="text" name="horario" class="form-control @error('horario') is-invalid @enderror" value="{{ old('horario', $medico?->horario) }}" id="horario" placeholder="Horario">
-            {!! $errors->first('horario', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+            <label for="horario_inicio" class="form-label">{{ __('Horario Inicio') }}</label>
+            <input type="time" name="horario_inicio" class="form-control @error('horario_inicio') is-invalid @enderror" value="{{ old('horario_inicio') }}" id="horario_inicio">
+            {!! $errors->first('horario_inicio', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+        </div>
+        <div class="form-group mb-2 mb20">
+            <label for="horario_fin" class="form-label">{{ __('Horario Fin') }}</label>
+            <input type="time" name="horario_fin" class="form-control @error('horario_fin') is-invalid @enderror" value="{{ old('horario_fin') }}" id="horario_fin">
+            {!! $errors->first('horario_fin', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
 
     </div>
