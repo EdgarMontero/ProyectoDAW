@@ -13,13 +13,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span id="card_title">{{ __('Paciente') }}</span>
 
-                            <span id="card_title">
-                                {{ __('Paciente') }}
-                            </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('pacientes.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                            <div class="float-right">
+                                <a href="{{ route('pacientes.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -32,6 +29,11 @@
                     @endif
 
                     <div class="card-body bg-white">
+                        <form method="GET" action="{{ route('pacientes.index') }}" class="form-inline mb-4">
+                            <input type="text" name="search" class="form-control mr-sm-2" placeholder="Buscar..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </form>
+                        
                         <div class="table-responsive">
                             <table class="table table-striped table-hover datatable">
                                 <thead class="thead">

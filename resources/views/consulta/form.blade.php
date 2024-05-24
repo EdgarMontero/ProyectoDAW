@@ -37,6 +37,18 @@
                 <div class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></div>
             @enderror
         </div>
+        <div class="form-group mb-2 mb20">
+            <label for="estado_consulta" class="form-label">{{ __('Estado Consulta') }}</label>
+            <select name="estado_consulta" class="form-control @error('estado_consulta') is-invalid @enderror" id="estado_consulta">
+                <option value="pendiente" {{ old('estado_consulta', $consulta?->estado_consulta) == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                <option value="aceptada" {{ old('estado_consulta', $consulta?->estado_consulta) == 'aceptada' ? 'selected' : '' }}>Aceptada</option>
+                <option value="cancelada" {{ old('estado_consulta', $consulta?->estado_consulta) == 'cancelada' ? 'selected' : '' }}>Cancelada</option>
+                <option value="finalizada" {{ old('estado_consulta', $consulta?->estado_consulta) == 'finalizada' ? 'selected' : '' }}>Finalizada</option>
+            </select>
+            @error('estado_consulta')
+                <div class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></div>
+            @enderror
+        </div>
     </div>
     <div class="col-md-12 mt20 mt-2">
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>

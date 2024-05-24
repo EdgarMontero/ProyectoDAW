@@ -46,6 +46,10 @@
                             <strong>Fecha Consulta:</strong>
                             {{ $consulta->fecha_consulta }}
                         </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Estado Consulta:</strong>
+                            {{ $consulta->estado_consulta }}
+                        </div>
 
                     </div>
                 </div>

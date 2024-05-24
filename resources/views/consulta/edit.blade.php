@@ -6,7 +6,6 @@
     <h1>Editar Consulta</h1>
 @stop
 
-
 @section('content')
     <section class="content container-fluid">
         <div class="">
@@ -17,7 +16,7 @@
                         <span class="card-title">{{ __('Update') }} Consulta</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('consultas.update', $consulta->id_consulta) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('consultas.update', $consulta->id_consulta) }}" role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

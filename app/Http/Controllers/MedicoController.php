@@ -4,16 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Medico;
 use App\Http\Requests\MedicoRequest;
+use Illuminate\Http\Request;
+use App\Models\User;
 
-/**
- * Class MedicoController
- * @package App\Http\Controllers
- */
+
 class MedicoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $medicos = Medico::paginate();
+        $query = Medico::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('dni_medico', 'LIKE', "%$search%")
+                  ->orWhere('user_id', 'LIKE', "%$search%")
+                  ->orWhere('nombre', 'LIKE', "%$search%")
+                  ->orWhere('especialidad', 'LIKE', "%$search%")
+                  ->orWhere('horario', 'LIKE', "%$search%");
+            });
+        }
+
+        $medicos = $query->paginate(10); // Ajusta el número de elementos por página
 
         return view('medico.index', compact('medicos'))
             ->with('i', (request()->input('page', 1) - 1) * $medicos->perPage());
@@ -28,7 +40,8 @@ class MedicoController extends Controller
     public function edit($dni_medico)
     {
         $medico = Medico::where('dni_medico', $dni_medico)->firstOrFail();
-        return view('medico.edit', compact('medico'));
+        $usuarios = User::all()->pluck('name', 'id_user');
+        return view('medico.edit', compact('medico', 'usuarios'));
     }
 
     public function update(MedicoRequest $request, $dni_medico)
@@ -50,7 +63,9 @@ class MedicoController extends Controller
     public function create()
     {
         $medico = new Medico();
-        return view('medico.create', compact('medico'));
+        $usuarios = User::all()->pluck('name', 'id_user');
+
+        return view('medico.create', compact('medico', 'usuarios'));
     }
 
     public function store(MedicoRequest $request)
@@ -62,5 +77,13 @@ class MedicoController extends Controller
 
         return redirect()->route('medicos.index')
             ->with('success', 'Medico created successfully.');
+    }
+
+    public function showConsultas($dni_medico)
+    {
+        $medico = Medico::where('dni_medico', $dni_medico)->firstOrFail();
+        $consultas = $medico->consultas;
+
+        return view('medico.consultas', compact('medico', 'consultas'));
     }
 }

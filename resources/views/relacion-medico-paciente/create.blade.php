@@ -3,24 +3,21 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Crear Consulta</h1>
+    <h1>Crear Relacion Medico Pacientes</h1>
 @stop
 
 @section('content')
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
-
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Consulta</span>
+                        <span class="card-title">{{ __('Create') }} Relacion Medico Paciente</span>
                     </div>
                     <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('consultas.store') }}" role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('relacionmedicopacientes.store') }}" role="form" enctype="multipart/form-data">
                             @csrf
-
-                            @include('consulta.form')
-
+                            @include('relacion-medico-paciente.form')
                         </form>
                     </div>
                 </div>

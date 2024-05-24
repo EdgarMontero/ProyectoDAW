@@ -3,13 +3,23 @@
         
         <div class="form-group mb-2 mb20">
             <label for="dni_medico" class="form-label">{{ __('Dni Medico') }}</label>
-            <input type="text" name="dni_medico" class="form-control @error('dni_medico') is-invalid @enderror" value="{{ old('dni_medico', $medico?->dni_medico) }}" id="dni_medico" placeholder="Dni Medico">
+            <input type="text" name="dni_medico" class="form-control @error('dni_medico') is-invalid @enderror" value="{{ old('dni_medico', $medico?->dni_medico) }}" id="dni_medico" placeholder="Dni Medico" @if(isset($editMode) && $editMode) disabled @endif>
             {!! $errors->first('dni_medico', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
+        @if(isset($editMode) && $editMode)
+            <input type="hidden" name="dni_medico" value="{{ $medico->dni_medico }}">
+        @endif
+
         <div class="form-group mb-2 mb20">
             <label for="user_id" class="form-label">{{ __('User Id') }}</label>
-            <input type="text" name="user_id" class="form-control @error('user_id') is-invalid @enderror" value="{{ old('user_id', $medico?->user_id) }}" id="user_id" placeholder="User Id">
-            {!! $errors->first('user_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+            <select name="user_id" id="user_id" class="form-control @error('user_id') is-invalid @enderror">
+            <option value="">{{ __('Seleccione un usuario') }}</option>
+            @foreach ($usuarios as $id => $nombre)
+                <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $nombre }}</option>
+            @endforeach
+        </select>
+        {!! $errors->first('user_id', '<div class="invalid-feedback"><strong>:message</strong></div>') !!}
+
         </div>
         <div class="form-group mb-2 mb20">
             <label for="nombre" class="form-label">{{ __('Nombre') }}</label>
@@ -23,12 +33,12 @@
         </div>
         <div class="form-group mb-2 mb20">
             <label for="horario_inicio" class="form-label">{{ __('Horario Inicio') }}</label>
-            <input type="time" name="horario_inicio" class="form-control @error('horario_inicio') is-invalid @enderror" value="{{ old('horario_inicio') }}" id="horario_inicio">
+            <input type="time" name="horario_inicio" class="form-control @error('horario_inicio') is-invalid @enderror" value="{{ old('horario_inicio', $medico?->horario_inicio) }}" id="horario_inicio">
             {!! $errors->first('horario_inicio', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
             <label for="horario_fin" class="form-label">{{ __('Horario Fin') }}</label>
-            <input type="time" name="horario_fin" class="form-control @error('horario_fin') is-invalid @enderror" value="{{ old('horario_fin') }}" id="horario_fin">
+            <input type="time" name="horario_fin" class="form-control @error('horario_fin') is-invalid @enderror" value="{{ old('horario_fin', $medico?->horario_fin) }}" id="horario_fin">
             {!! $errors->first('horario_fin', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
 

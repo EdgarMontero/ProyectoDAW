@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 /**
@@ -24,6 +25,8 @@ use Carbon\Carbon;
  */
 class Consulta extends Model
 {
+    use HasFactory;
+
     protected $primaryKey = 'id_consulta';
 
     protected $perPage = 100;
@@ -37,6 +40,8 @@ class Consulta extends Model
             'descripcion_consulta' => 'required|string',
             'fecha_consulta' => 'required|date',
             'hora_consulta' => 'required|date_format:H:i',
+            'estado_consulta' => 'required|string',
+
     ];
 
     /**
@@ -44,7 +49,7 @@ class Consulta extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_medico', 'id_paciente', 'tipo_consulta', 'descripcion_consulta', 'fecha_consulta'];
+    protected $fillable = ['id_medico', 'id_paciente', 'tipo_consulta', 'descripcion_consulta', 'fecha_consulta', 'estado_consulta'];
 
     protected static function boot()
     {

@@ -53,14 +53,15 @@ return new class extends Migration
             $table->string('tipo_consulta');
             $table->text('descripcion_consulta');
             $table->date('fecha_consulta');
+            $table->string('estado_consulta');  // Nueva columna para el estado de la consulta
             $table->timestamps();
-
+        
             $table->foreign('id_medico')->references('dni_medico')->on('medicos');
             $table->foreign('id_paciente')->references('dni_paciente')->on('pacientes');
         });
 
         // Relación Médico-Paciente
-        Schema::create('relacion_medico_paciente', function (Blueprint $table) {
+        Schema::create('relacion_medico_pacientes', function (Blueprint $table) {
             $table->string('id_medico');  
             $table->string('id_paciente');  
             $table->timestamps();

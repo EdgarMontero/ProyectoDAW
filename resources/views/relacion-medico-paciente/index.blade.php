@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Consultas</h1>
+    <h1>Lista de Relaciones Medico Pacientes</h1>
 @stop
 
 @section('content')
@@ -13,16 +13,18 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">{{ __('Consulta') }}</span>
 
-                            <div class="float-right">
-                                <a href="{{ route('consultas.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    {{ __('Create New') }}
+                            <span id="card_title">
+                                {{ __('Relacion Medico Paciente') }}
+                            </span>
+
+                             <div class="float-right">
+                                <a href="{{ route('relacionmedicopacientes.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Create New') }}
                                 </a>
-                            </div>
+                              </div>
                         </div>
                     </div>
-
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
                             <p>{{ $message }}</p>
@@ -30,42 +32,33 @@
                     @endif
 
                     <div class="card-body bg-white">
-                        <form method="GET" action="{{ route('consultas.index') }}" class="form-inline mb-4">
-                            <input type="text" name="search" class="form-control mr-sm-2" placeholder="Buscar...">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
-                        </form>
-
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover datatable">
+                            <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>DNI Medico</th>
-                                        <th>DNI Paciente</th>
-                                        <th>Tipo Consulta</th>
-                                        <th>Descripcion Consulta</th>
-                                        <th>Fecha Consulta</th>
-                                        <th>Estado Consulta</th>
+                                        
+										<th>Id Medico</th>
+										<th>Id Paciente</th>
+
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($consultas as $consulta)
+                                    @foreach ($relacionMedicoPacientes as $relacionMedicoPaciente)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            <td>{{ $consulta->id_medico }}</td>
-                                            <td>{{ $consulta->id_paciente }}</td>
-                                            <td>{{ $consulta->tipo_consulta }}</td>
-                                            <td>{{ $consulta->descripcion_consulta }}</td>
-                                            <td>{{ $consulta->fecha_consulta }}</td>
-                                            <td>{{ $consulta->estado_consulta }}</td>
+                                            
+											<td>{{ $relacionMedicoPaciente->id_medico }}</td>
+											<td>{{ $relacionMedicoPaciente->id_paciente }}</td>
+
                                             <td>
-                                                <form action="{{ route('consultas.destroy',$consulta->id_consulta) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary" href="{{ route('consultas.show',$consulta->id_consulta) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('consultas.edit',$consulta->id_consulta) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                            <form action="{{ route('relacionmedicopacientes.destroy', $relacionMedicoPaciente->id_medico . ',' . $relacionMedicoPaciente->id_paciente) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('relacionmedicopacientes.show',$relacionMedicoPaciente->id_medico . ',' . $relacionMedicoPaciente->id_paciente) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('relacionmedicopacientes.edit',$relacionMedicoPaciente->id_medico . ',' . $relacionMedicoPaciente->id_paciente) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -73,10 +66,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <br>
-                        {!! $consultas->links() !!}
                     </div>
                 </div>
+                {!! $relacionMedicoPacientes->links() !!}
             </div>
         </div>
     </div>

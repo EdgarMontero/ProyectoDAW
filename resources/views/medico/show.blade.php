@@ -6,7 +6,6 @@
     <h1>Mostrar Medico</h1>
 @stop
 
-
 @section('content')
     <section class="content container-fluid">
         <div class="row">

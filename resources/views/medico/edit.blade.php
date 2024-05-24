@@ -6,10 +6,9 @@
     <h1>Editar Medico</h1>
 @stop
 
-
 @section('content')
     <section class="content container-fluid">
-        <div class="">
+        <div class="row">
             <div class="col-md-12">
 
                 <div class="card card-default">
@@ -21,7 +20,7 @@
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('medico.form')
+                            @include('medico.form', ['editMode' => true])
 
                         </form>
                     </div>

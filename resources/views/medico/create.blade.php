@@ -19,7 +19,7 @@
                         <form method="POST" action="{{ route('medicos.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('medico.form')
+                            @include('medico.form', ['editMode' => false])
 
                         </form>
                     </div>

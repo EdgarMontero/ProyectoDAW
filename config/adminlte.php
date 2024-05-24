@@ -358,8 +358,37 @@ return [
             ],
         ],
         [
-            'text' => 'Horario',
-            'url' => 'horario',
+            'text' => 'Users',
+            'icon' => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Users',
+                    'url' => 'users',
+                ],
+                [
+                    'text' => 'Crear User',
+                    'url' => 'users/create',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Relacion Medico Pacientes',
+            'icon' => 'fas fa-handshake',
+            'submenu' => [
+                [
+                    'text' => 'Relaciones',
+                    'url' => 'relacionmedicopacientes',
+                ],
+                [
+                    'text' => 'Crear Relacion',
+                    'url' => 'relacionmedicopacientes/create',
+                ],
+            ],
+        ],
+        
+        [
+            'text' => 'Calendario',
+            'url' => 'calendario',
             'icon' => 'fas fa-fw fa-calendar-alt',
         ],
     ],

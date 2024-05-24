@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Consulta;
 use App\Http\Requests\ConsultaRequest;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+
 
 
 /**
@@ -16,13 +18,28 @@ class ConsultaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $consultas = Consulta::paginate();
+        $query = Consulta::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('id_medico', 'LIKE', "%$search%")
+                ->orWhere('id_paciente', 'LIKE', "%$search%")
+                ->orWhere('tipo_consulta', 'LIKE', "%$search%")
+                ->orWhere('descripcion_consulta', 'LIKE', "%$search%")
+                ->orWhere('fecha_consulta', 'LIKE', "%$search%")
+                ->orWhere('estado_consulta', 'LIKE', "%$search%");
+            });
+        }
+
+        $consultas = $query->paginate();
 
         return view('consulta.index', compact('consultas'))
             ->with('i', (request()->input('page', 1) - 1) * $consultas->perPage());
     }
+
 
     /**
      * Show the form for creating a new resource.
