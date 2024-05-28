@@ -19,7 +19,7 @@ class PacienteController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Paciente::with('user'); // Asegura que se incluya la relación
+        $query = Paciente::with('user');
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -28,7 +28,7 @@ class PacienteController extends Controller
                   ->orWhere('nombre', 'LIKE', "%$search%")
                   ->orWhere('direccion', 'LIKE', "%$search%")
                   ->orWhere('telefono', 'LIKE', "%$search%")
-                  ->orWhereHas('user', function($q) use ($search) { // Agrega esto para buscar por nombre de usuario
+                  ->orWhereHas('user', function($q) use ($search) { 
                       $q->where('name', 'LIKE', "%$search%");
                   });
             });

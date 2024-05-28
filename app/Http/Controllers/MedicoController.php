@@ -25,7 +25,7 @@ class MedicoController extends Controller
             });
         }
 
-        $medicos = $query->paginate(10); // Ajusta el número de elementos por página
+        $medicos = $query->paginate(); 
 
         return view('medico.index', compact('medicos'))
             ->with('i', (request()->input('page', 1) - 1) * $medicos->perPage());

@@ -33,7 +33,6 @@ class HomeController extends Controller
         $totalPacientes = Paciente::count();
         $totalConsultas = Consulta::count();
 
-        // Obtener consultas mensuales
         $currentYear = Carbon::now()->year;
         $monthlyData = Consulta::selectRaw('MONTH(fecha_consulta) as month, COUNT(*) as count')
             ->whereYear('fecha_consulta', $currentYear)
@@ -42,11 +41,9 @@ class HomeController extends Controller
             ->get()
             ->pluck('count', 'month');
 
-        // Crear un array con los datos de los meses
         $monthlyLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         $monthlyDataFormatted = [];
 
-        // Formatear los datos para Chart.js
         for ($i = 1; $i <= 12; $i++) {
             $monthlyDataFormatted[] = $monthlyData->get($i, 0);
         }

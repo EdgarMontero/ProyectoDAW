@@ -63,7 +63,6 @@ class ConsultaController extends Controller
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1452) {
-                // Error de restricción de clave externa
                 if (strpos($e->getMessage(), 'consultas_id_medico_foreign') !== false) {
                     return redirect()->back()
                         ->withInput()
@@ -113,7 +112,6 @@ class ConsultaController extends Controller
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1452) {
-                // Error de restricción de clave externa
                 if (strpos($e->getMessage(), 'consultas_id_medico_foreign') !== false) {
                     return redirect()->back()
                         ->withInput()

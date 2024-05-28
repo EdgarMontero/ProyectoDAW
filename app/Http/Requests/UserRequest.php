@@ -22,7 +22,7 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_user' => 'required|string|max:255', // Agregar si se necesita validación para id_user
+            'id_user' => 'required|string|max:255', 
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',

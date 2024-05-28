@@ -37,10 +37,9 @@ class PacienteRequest extends FormRequest
             'nombre' => 'required|string',
             'fecha_nacimiento' => 'required|date|before_or_equal:today',
             'direccion' => 'required|string',
-            'telefono' => 'required|numeric|digits:9',  // Ajusta esta línea
+            'telefono' => 'required|numeric|digits:9',  
         ];
     }
-
 
     /**
      * Checks if the given DNI is valid.
@@ -50,7 +49,7 @@ class PacienteRequest extends FormRequest
      */
     private function is_valid_dni($dni)
     {
-        $letter = strtoupper(substr($dni, -1));  // Convertimos la letra a mayúscula
+        $letter = strtoupper(substr($dni, -1));  
         $numbers = substr($dni, 0, -1);
 
         if (strlen($numbers) == 8 && strlen($letter) == 1 && substr("TRWAGMYFPDXBNJZSQVHLCKE", intval($numbers) % 23, 1) == $letter) {
