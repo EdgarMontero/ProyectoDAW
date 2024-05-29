@@ -31,7 +31,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $consulta->tipo_consulta }}</td>
-                                                <td>{{ $consulta->descripcion_consulta }}</td>
+                                                <td>{!! $consulta->descripcion_consulta !!}</td>
                                                 <td>{{ $consulta->fecha_consulta }}</td>
                                                 <td>
                                                 <form action="{{ route('consultas.destroy',$consulta->id_consulta) }}" method="POST">
@@ -61,14 +61,14 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 <style>
     .pagination a {
-        font-size: 16px; /* Ajusta el tamaño de la fuente */
+        font-size: 16px; 
     }
     .pagination li {
-        padding: 0 10px; /* Ajusta el padding */
+        padding: 0 10px; 
     }
-    .w-5, .h-5 { /* Asegúrate de que estas clases estén definidas */
-        width: 20px; /* Ancho del SVG */
-        height: 20px; /* Alto del SVG */
+    .w-5, .h-5 {
+        width: 20px; 
+        height: 20px;
     }
 </style>
 @stop

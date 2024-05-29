@@ -6,7 +6,9 @@ use App\Models\Consulta;
 use App\Http\Requests\ConsultaRequest;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-
+use App\Events\ConsultaEstadoCambiado;
+use App\Models\Medico;
+use App\Models\Paciente;
 
 
 /**
@@ -34,11 +36,24 @@ class ConsultaController extends Controller
             });
         }
 
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('fecha_consulta', [$startDate, $endDate]);
+        } elseif ($startDate) {
+            $query->where('fecha_consulta', '>=', $startDate);
+        } elseif ($endDate) {
+            $query->where('fecha_consulta', '<=', $endDate);
+        }
+
         $consultas = $query->paginate();
 
         return view('consulta.index', compact('consultas'))
             ->with('i', (request()->input('page', 1) - 1) * $consultas->perPage());
     }
+
+
 
 
     /**
@@ -47,7 +62,9 @@ class ConsultaController extends Controller
     public function create()
     {
         $consulta = new Consulta();
-        return view('consulta.create', compact('consulta'));
+        $medicos = Medico::all();
+        $pacientes = Paciente::all();
+        return view('consulta.create', compact('consulta', 'medicos', 'pacientes'));
     }
 
     /**
@@ -85,8 +102,9 @@ class ConsultaController extends Controller
     public function show($id_consulta)
     {
         $consulta = Consulta::find($id_consulta);
-
-        return view('consulta.show', compact('consulta'));
+        $medicos = Medico::all();
+        $pacientes = Paciente::all();
+        return view('consulta.show', compact('consulta', 'medicos', 'pacientes'));
     }
 
     /**
@@ -95,8 +113,9 @@ class ConsultaController extends Controller
     public function edit($id_consulta)
     {
         $consulta = Consulta::find($id_consulta);
-
-        return view('consulta.edit', compact('consulta'));
+        $medicos = Medico::all();
+        $pacientes = Paciente::all();
+        return view('consulta.edit', compact('consulta', 'medicos', 'pacientes'));
     }
 
     /**
@@ -106,6 +125,8 @@ class ConsultaController extends Controller
     {
         try {
             $consulta->update($request->validated());
+
+            event(new ConsultaEstadoCambiado($consulta));
 
             return redirect()->route('consultas.index')
                 ->with('success', 'Consulta updated successfully');

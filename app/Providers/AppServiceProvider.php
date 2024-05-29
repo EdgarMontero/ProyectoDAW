@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $listen = [
+        ConsultaEstadoCambiado::class => [
+            EnviarCorreoCambioEstado::class,
+        ],
+    ];
     /**
      * Register any application services.
      */

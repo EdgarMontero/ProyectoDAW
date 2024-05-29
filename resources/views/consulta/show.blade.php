@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group mb-2 mb20">
                             <strong>Descripcion Consulta:</strong>
-                            {{ $consulta->descripcion_consulta }}
+                            {!! $consulta->descripcion_consulta !!}
                         </div>
                         <div class="form-group mb-2 mb20">
                             <strong>Fecha Consulta:</strong>

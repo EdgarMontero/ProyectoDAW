@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\RelacionMedicoPaciente;
 use App\Http\Requests\RelacionMedicoPacienteRequest;
+use App\Models\Medico;
+use App\Models\Paciente;
 
 /**
  * Class RelacionMedicoPacienteController
@@ -28,7 +30,9 @@ class RelacionMedicoPacienteController extends Controller
     public function create()
     {
         $relacionMedicoPaciente = new RelacionMedicoPaciente();
-        return view('relacion-medico-paciente.create', compact('relacionMedicoPaciente'));
+        $medicos = Medico::all();
+        $pacientes = Paciente::all();
+        return view('relacion-medico-paciente.create', compact('relacionMedicoPaciente', 'medicos', 'pacientes'));
     }
 
     /**
@@ -36,10 +40,16 @@ class RelacionMedicoPacienteController extends Controller
      */
     public function store(RelacionMedicoPacienteRequest $request)
     {
-        RelacionMedicoPaciente::create($request->validated());
+        try {
+            RelacionMedicoPaciente::create($request->validated());
 
-        return redirect()->route('relacion-medico-pacientes.index')
-            ->with('success', 'RelacionMedicoPaciente created successfully.');
+            return redirect()->route('relacionmedicopacientes.index')
+                ->with('success', 'Relación creada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors(['error' => 'La relación entre el médico y el paciente ya existe.'])
+                ->withInput();
+        }
     }
 
     /**
@@ -47,50 +57,32 @@ class RelacionMedicoPacienteController extends Controller
      */
     public function show($ids)
     {
-        $ids = explode(',', $ids); 
+        $ids = explode(',', $ids);
         $id_medico = $ids[0];
         $id_paciente = $ids[1];
 
         $relacionMedicoPaciente = RelacionMedicoPaciente::where('id_medico', $id_medico)
-                                                        ->where('id_paciente', $id_paciente)
-                                                        ->first();
+            ->where('id_paciente', $id_paciente)
+            ->first();
 
         return view('relacion-medico-paciente.show', compact('relacionMedicoPaciente'));
     }
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Remove the specified resource from storage.
      */
-    public function edit($ids)
+    public function destroy($ids)
     {
         $ids = explode(',', $ids);
         $id_medico = $ids[0];
         $id_paciente = $ids[1];
-    
-        $relacionMedicoPaciente = RelacionMedicoPaciente::where('id_medico', $id_medico)
-                                                         ->where('id_paciente', $id_paciente)
-                                                         ->first();
 
-        return view('relacion-medico-paciente.edit', compact('relacionMedicoPaciente'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(RelacionMedicoPacienteRequest $request, RelacionMedicoPaciente $relacionMedicoPaciente)
-    {
-        $relacionMedicoPaciente->update($request->validated());
+        RelacionMedicoPaciente::where('id_medico', $id_medico)
+            ->where('id_paciente', $id_paciente)
+            ->delete();
 
         return redirect()->route('relacionmedicopacientes.index')
-            ->with('success', 'RelacionMedicoPaciente updated successfully');
-    }
-
-    public function destroy($id)
-    {
-        RelacionMedicoPaciente::find($id)->delete();
-
-        return redirect()->route('relacion-medico-pacientes.index')
             ->with('success', 'RelacionMedicoPaciente deleted successfully');
     }
 }

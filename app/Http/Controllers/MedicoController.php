@@ -16,16 +16,16 @@ class MedicoController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('dni_medico', 'LIKE', "%$search%")
-                  ->orWhere('user_id', 'LIKE', "%$search%")
-                  ->orWhere('nombre', 'LIKE', "%$search%")
-                  ->orWhere('especialidad', 'LIKE', "%$search%")
-                  ->orWhere('horario', 'LIKE', "%$search%");
+                    ->orWhere('user_id', 'LIKE', "%$search%")
+                    ->orWhere('nombre', 'LIKE', "%$search%")
+                    ->orWhere('especialidad', 'LIKE', "%$search%")
+                    ->orWhere('horario', 'LIKE', "%$search%");
             });
         }
 
-        $medicos = $query->paginate(); 
+        $medicos = $query->paginate();
 
         return view('medico.index', compact('medicos'))
             ->with('i', (request()->input('page', 1) - 1) * $medicos->perPage());
@@ -41,8 +41,12 @@ class MedicoController extends Controller
     {
         $medico = Medico::where('dni_medico', $dni_medico)->firstOrFail();
         $usuarios = User::all()->pluck('name', 'id_user');
-        return view('medico.edit', compact('medico', 'usuarios'));
+
+        list($horario_inicio, $horario_fin) = explode(' - ', $medico->horario);
+
+        return view('medico.edit', compact('medico', 'usuarios', 'horario_inicio', 'horario_fin'));
     }
+
 
     public function update(MedicoRequest $request, $dni_medico)
     {

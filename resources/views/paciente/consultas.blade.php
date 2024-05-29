@@ -31,7 +31,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $consulta->tipo_consulta }}</td>
-                                                <td>{{ $consulta->descripcion_consulta }}</td>
+                                                <td>{!! $consulta->descripcion_consulta !!}</td>
                                                 <td>{{ $consulta->fecha_consulta }}</td>
                                                 <td>
                                                 <form action="{{ route('consultas.destroy',$consulta->id_consulta) }}" method="POST">

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
+
 
 class RelacionMedicoPacienteRequest extends FormRequest
 {
@@ -24,4 +26,6 @@ class RelacionMedicoPacienteRequest extends FormRequest
             'id_paciente' => 'required|string|exists:pacientes,dni_paciente',
         ];
     }
+
+    
 }

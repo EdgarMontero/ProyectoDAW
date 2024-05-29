@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Class Paciente
@@ -38,6 +39,22 @@ class Paciente extends Model
      * @var array
      */
     protected $fillable = ['dni_paciente', 'user_id', 'nombre', 'fecha_nacimiento', 'direccion', 'telefono'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            self::validateUniqueUserId($model->user_id);
+        });
+    }
+
+    public static function validateUniqueUserId($user_id)
+    {
+        if (Paciente::where('user_id', $user_id)->exists()) {
+            throw ValidationException::withMessages(['user_id' => 'El user_id ya está asociado con otro paciente.']);
+        }
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

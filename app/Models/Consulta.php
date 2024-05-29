@@ -55,13 +55,6 @@ class Consulta extends Model
     {
         parent::boot();
 
-        static::saving(function ($model) {
-            if (Carbon::parse($model->fecha_consulta)->isFuture()) {
-                throw ValidationException::withMessages([
-                    'fecha_consulta' => 'La fecha de la consulta no puede ser una fecha futura.',
-                ]);
-            }
-        });
     }
 
     /**
