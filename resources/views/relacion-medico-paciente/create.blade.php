@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Crear Relacion Medico Pacientes')
 
 @section('content_header')
 <h1>Crear Relacion Medico Pacientes</h1>

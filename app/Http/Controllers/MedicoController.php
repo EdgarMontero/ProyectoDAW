@@ -68,8 +68,10 @@ class MedicoController extends Controller
     {
         $medico = new Medico();
         $usuarios = User::all()->pluck('name', 'id_user');
+        $horario_inicio = "00:00";
+        $horario_fin = "00:00";
 
-        return view('medico.create', compact('medico', 'usuarios'));
+        return view('medico.create', compact('medico', 'usuarios', 'horario_inicio', 'horario_fin'));
     }
 
     public function store(MedicoRequest $request)
