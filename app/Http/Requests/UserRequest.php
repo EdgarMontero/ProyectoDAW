@@ -21,11 +21,14 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Obtenemos el ID del usuario, si está presente en la ruta.
+        $userId = $this->route('user') ? $this->route('user')->id_user : null;
+
         return [
-            'id_user' => 'required|string|max:255', 
+            'id_user' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|unique:users,email,' . $userId . ',id_user',
+            'password' => $userId ? 'nullable|string|min:8|confirmed' : 'required|string|min:8|confirmed',
         ];
     }
 }

@@ -23,14 +23,14 @@ class PacienteController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('dni_paciente', 'LIKE', "%$search%")
-                  ->orWhere('nombre', 'LIKE', "%$search%")
-                  ->orWhere('direccion', 'LIKE', "%$search%")
-                  ->orWhere('telefono', 'LIKE', "%$search%")
-                  ->orWhereHas('user', function($q) use ($search) { 
-                      $q->where('name', 'LIKE', "%$search%");
-                  });
+                    ->orWhere('nombre', 'LIKE', "%$search%")
+                    ->orWhere('direccion', 'LIKE', "%$search%")
+                    ->orWhere('telefono', 'LIKE', "%$search%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%$search%");
+                    });
             });
         }
 

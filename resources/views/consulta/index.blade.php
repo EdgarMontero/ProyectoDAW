@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Consultas</h1>
+<h1>Lista de Consultas</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,8 @@
                         <span id="card_title">{{ __('Consulta') }}</span>
 
                         <div class="float-right">
-                            <a href="{{ route('consultas.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
+                            <a href="{{ route('consultas.create') }}" class="btn btn-primary btn-sm float-right"
+                                data-placement="left">
                                 {{ __('Create New') }}
                             </a>
                         </div>
@@ -62,12 +63,18 @@
                                         <td>{{ $consulta->fecha_consulta }}</td>
                                         <td>{{ $consulta->estado_consulta }}</td>
                                         <td>
-                                            <form action="{{ route('consultas.destroy',$consulta->id_consulta) }}" method="POST">
-                                                <a class="btn btn-sm btn-primary" href="{{ route('consultas.show',$consulta->id_consulta) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
-                                                <a class="btn btn-sm btn-success" href="{{ route('consultas.edit',$consulta->id_consulta) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                            <form action="{{ route('consultas.destroy', $consulta->id_consulta) }}"
+                                                method="POST">
+                                                <a class="btn btn-sm btn-primary"
+                                                    href="{{ route('consultas.show', $consulta->id_consulta) }}"><i
+                                                        class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}</a>
+                                                <a class="btn btn-sm btn-success"
+                                                    href="{{ route('consultas.edit', $consulta->id_consulta) }}"><i
+                                                        class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -90,14 +97,17 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 <style>
     .pagination a {
-        font-size: 16px; 
+        font-size: 16px;
     }
+
     .pagination li {
-        padding: 0 10px; 
+        padding: 0 10px;
     }
-    .w-5, .h-5 { 
-        width: 20px; 
-        height: 20px; 
+
+    .w-5,
+    .h-5 {
+        width: 20px;
+        height: 20px;
     }
 </style>
 @stop

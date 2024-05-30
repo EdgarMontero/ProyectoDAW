@@ -10,7 +10,6 @@ use App\Events\ConsultaEstadoCambiado;
 use App\Models\Medico;
 use App\Models\Paciente;
 
-
 /**
  * Class ConsultaController
  * @package App\Http\Controllers
@@ -26,13 +25,13 @@ class ConsultaController extends Controller
 
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('id_medico', 'LIKE', "%$search%")
-                ->orWhere('id_paciente', 'LIKE', "%$search%")
-                ->orWhere('tipo_consulta', 'LIKE', "%$search%")
-                ->orWhere('descripcion_consulta', 'LIKE', "%$search%")
-                ->orWhere('fecha_consulta', 'LIKE', "%$search%")
-                ->orWhere('estado_consulta', 'LIKE', "%$search%");
+                    ->orWhere('id_paciente', 'LIKE', "%$search%")
+                    ->orWhere('tipo_consulta', 'LIKE', "%$search%")
+                    ->orWhere('descripcion_consulta', 'LIKE', "%$search%")
+                    ->orWhere('fecha_consulta', 'LIKE', "%$search%")
+                    ->orWhere('estado_consulta', 'LIKE', "%$search%");
             });
         }
 
@@ -52,9 +51,6 @@ class ConsultaController extends Controller
         return view('consulta.index', compact('consultas'))
             ->with('i', (request()->input('page', 1) - 1) * $consultas->perPage());
     }
-
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -76,7 +72,7 @@ class ConsultaController extends Controller
             Consulta::create($request->validated());
 
             return redirect()->route('consultas.index')
-                ->with('success', 'Consulta created successfully.');
+                ->with('success', 'Consulta creada correctamente.');
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1452) {
@@ -121,15 +117,17 @@ class ConsultaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ConsultaRequest $request, Consulta $consulta)
+    public function update(ConsultaRequest $request, $id_consulta)
     {
+        $consulta = Consulta::findOrFail($id_consulta);
+
         try {
             $consulta->update($request->validated());
 
             event(new ConsultaEstadoCambiado($consulta));
 
             return redirect()->route('consultas.index')
-                ->with('success', 'Consulta updated successfully');
+                ->with('success', 'Consulta actualizada correctamente');
         } catch (QueryException $e) {
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1452) {
@@ -149,11 +147,12 @@ class ConsultaController extends Controller
         }
     }
 
+
     public function destroy($id)
     {
         Consulta::find($id)->delete();
 
         return redirect()->route('consultas.index')
-            ->with('success', 'Consulta deleted successfully');
+            ->with('success', 'Consulta eliminada correctamente');
     }
 }

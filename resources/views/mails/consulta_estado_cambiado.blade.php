@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             width: 100%;
             max-width: 600px;
@@ -20,6 +22,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .header {
             background-color: #007BFF;
             color: #ffffff;
@@ -28,10 +31,12 @@
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
+
         .content {
             margin: 20px 0;
             color: #333333;
         }
+
         .footer {
             text-align: center;
             margin-top: 20px;
@@ -40,6 +45,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -54,4 +60,5 @@
         </div>
     </div>
 </body>
+
 </html>

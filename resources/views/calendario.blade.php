@@ -3,19 +3,19 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Calendario</h1>
+<h1>Calendario</h1>
 @stop
 
 @section('content')
-    <div class="container">
-        <h1>Esta es la vista del Calendario</h1>
-        <div class="form-group">
-            <label for="dni_medico">DNI del Médico:</label>
-            <input type="text" id="dni_medico" class="form-control" placeholder="Ingrese el DNI del médico">
-        </div>
-        <button id="load_calendar" class="btn btn-primary">Cargar Calendario</button>
-        <div id="calendar"></div>
+<div class="container">
+    <h1>Esta es la vista del Calendario</h1>
+    <div class="form-group">
+        <label for="dni_medico">DNI del Médico:</label>
+        <input type="text" id="dni_medico" class="form-control" placeholder="Ingrese el DNI del médico">
     </div>
+    <button id="load_calendar" class="btn btn-primary">Cargar Calendario</button>
+    <div id="calendar"></div>
+</div>
 @stop
 
 @section('css')
@@ -30,7 +30,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Función para cargar el calendario con el DNI del médico
         function loadCalendar(dniMedico) {
             if (dniMedico) {
@@ -43,11 +43,11 @@
                         data: {
                             dni_medico: dniMedico
                         },
-                        error: function() {
+                        error: function () {
                             alert('No se pudieron cargar las consultas.');
                         }
                     },
-                    eventClick: function(event) {
+                    eventClick: function (event) {
                         window.location.href = '/consultas/' + event.id + '/edit';
                     }
                 });
@@ -64,7 +64,7 @@
         }
 
         // Evento para cargar el calendario al hacer clic en el botón
-        $('#load_calendar').on('click', function() {
+        $('#load_calendar').on('click', function () {
             var dniMedico = $('#dni_medico').val();
             if (dniMedico) {
                 // Guardar el DNI en el almacenamiento local

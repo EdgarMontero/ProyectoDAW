@@ -27,5 +27,5 @@ class RelacionMedicoPacienteRequest extends FormRequest
         ];
     }
 
-    
+
 }

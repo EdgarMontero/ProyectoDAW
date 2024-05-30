@@ -47,7 +47,7 @@ class HomeController extends Controller
         for ($i = 1; $i <= 12; $i++) {
             $monthlyDataFormatted[] = $monthlyData->get($i, 0);
         }
-        return view('home',  compact('totalUsers', 'totalMedicos', 'totalPacientes', 'totalConsultas', 'monthlyLabels', 'monthlyDataFormatted'));
+        return view('home', compact('totalUsers', 'totalMedicos', 'totalPacientes', 'totalConsultas', 'monthlyLabels', 'monthlyDataFormatted'));
     }
 }
 ?>

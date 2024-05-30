@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -23,19 +22,19 @@ return new class extends Migration
 
         // Médicos
         Schema::create('medicos', function (Blueprint $table) {
-            $table->string('dni_medico')->primary();  
+            $table->string('dni_medico')->primary();
             $table->unsignedBigInteger('user_id');
             $table->string('nombre');
             $table->string('especialidad');
             $table->string('horario');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id_user')->on('users');
+            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
         });
 
         // Pacientes
         Schema::create('pacientes', function (Blueprint $table) {
-            $table->string('dni_paciente')->primary();  
+            $table->string('dni_paciente')->primary();
             $table->unsignedBigInteger('user_id');
             $table->string('nombre');
             $table->date('fecha_nacimiento');
@@ -43,34 +42,34 @@ return new class extends Migration
             $table->string('telefono');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id_user')->on('users');
+            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
         });
 
         // Consultas
         Schema::create('consultas', function (Blueprint $table) {
             $table->id('id_consulta');
-            $table->string('id_medico');  
-            $table->string('id_paciente');  
+            $table->string('id_medico');
+            $table->string('id_paciente');
             $table->string('tipo_consulta');
             $table->text('descripcion_consulta');
-            $table->date('fecha_consulta');
-            $table->string('estado_consulta');  // Nueva columna para el estado de la consulta
+            $table->datetime('fecha_consulta'); 
+            $table->string('estado_consulta');  
             $table->timestamps();
-        
-            $table->foreign('id_medico')->references('dni_medico')->on('medicos');
-            $table->foreign('id_paciente')->references('dni_paciente')->on('pacientes');
+
+            $table->foreign('id_medico')->references('dni_medico')->on('medicos')->onDelete('cascade');
+            $table->foreign('id_paciente')->references('dni_paciente')->on('pacientes')->onDelete('cascade');
         });
 
         // Relación Médico-Paciente
         Schema::create('relacion_medico_pacientes', function (Blueprint $table) {
-            $table->string('id_medico');  
-            $table->string('id_paciente');  
+            $table->string('id_medico');
+            $table->string('id_paciente');
             $table->timestamps();
 
             $table->primary(['id_medico', 'id_paciente']);
 
-            $table->foreign('id_medico')->references('dni_medico')->on('medicos');
-            $table->foreign('id_paciente')->references('dni_paciente')->on('pacientes');
+            $table->foreign('id_medico')->references('dni_medico')->on('medicos')->onDelete('cascade');
+            $table->foreign('id_paciente')->references('dni_paciente')->on('pacientes')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -86,6 +85,8 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+
+            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
         });
     }
 
@@ -94,7 +95,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('relacion_medico_paciente');
+        Schema::dropIfExists('relacion_medico_pacientes');
         Schema::dropIfExists('consultas');
         Schema::dropIfExists('pacientes');
         Schema::dropIfExists('medicos');

@@ -29,17 +29,23 @@ class ConsultaRequest extends FormRequest
         $validator->after(function ($validator) {
             $fechaConsulta = $this->input('fecha_consulta');
             $idMedico = $this->input('id_medico');
+            $idConsulta = $this->route('consulta');
 
-            if ($this->medicoTieneConsulta($idMedico, $fechaConsulta)) {
+            if ($this->medicoTieneConsulta($idMedico, $fechaConsulta, $idConsulta)) {
                 $validator->errors()->add('fecha_consulta', 'El médico ya tiene una consulta programada en esta fecha y hora.');
             }
         });
     }
 
-    private function medicoTieneConsulta($idMedico, $fechaConsulta)
+    private function medicoTieneConsulta($idMedico, $fechaConsulta, $idConsulta = null)
     {
-        return Consulta::where('id_medico', $idMedico)
-            ->where('fecha_consulta', $fechaConsulta)
-            ->exists();
+        $query = Consulta::where('id_medico', $idMedico)
+            ->where('fecha_consulta', $fechaConsulta);
+
+        if ($idConsulta) {
+            $query->where('id_consulta', '!=', $idConsulta);
+        }
+
+        return $query->exists();
     }
 }
